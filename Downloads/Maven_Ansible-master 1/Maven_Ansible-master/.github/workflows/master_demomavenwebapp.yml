@@ -1,0 +1,93 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy WAR app to Azure Web App - demomavenwebapp
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    name: deploy
+    steps:
+#       - name: stop application
+#         shell: cmd
+#         run: |-
+#           "C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat" -lang jython -username System -password optimizer -c AdminControl.invoke(AdminControl.queryNames('type=ApplicationManager,process=server1,*'), 'stopApplication', 'LoginWebApp')"
+#       - name: update application
+#         shell: cmd
+#         run: |-
+#          "C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat" -lang jython -username System -password optimizer -c "AdminApp.update('LoginWebApp', 'app', '[-contents C:/Users/windowspoc/Downloads/LoginWebApp-1.war -contextroot myapp1 -operation update]')"
+#       - name: save application
+#         shell: cmd
+#         run: |-
+#          "C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat" -lang jython -username System -password optimizer -c "AdminConfig.save()"
+#       - name: start application
+#         shell: cmd
+#         run: |-
+#          "C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat" -lang jython -username System -password optimizer -c "AdminControl.invoke(AdminControl.queryNames('type=ApplicationManager,process=server1,*'), 'startApplication', 'LoginWebApp)"
+#       - name: Run wsadmin script
+#         shell: cmd
+#         run: |-
+#           "C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat" -lang jython -username System -password optimizer
+#       - name: Run wsadmin script
+#         shell: cmd
+#         run: |-
+#           echo "::set-env name=SHELL_COMMAND::C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat -lang jython -username System -password optimizer -c "AdminControl.completeObjectName('type=Application,name=LoginWebApp-1_war,*')""
+#       - name: Print Output
+#         run: echo "output"
+      - name: Run wsadmin command
+        shell: cmd
+        run: |-
+          wsadmin_command=$("C:/Program Files/IBM/WebSphere/AppServer/bin/wsadmin.bat" -lang jython -username System -password optimizer -c "AdminControl.completeObjectName('type=Application,name=LoginWebApp-1_war,*')")
+          output=$("$wsadmin_command")
+      - name: Print output
+        run: |
+          echo "$output"
+#           if: SHELL_COMMAND == "":
+#               appStatus = 'Stopped'
+#           else:
+#               appStatus = 'Running'
+#           return appStatus
+#     steps:
+#       - uses: actions/checkout@v2
+
+#       - name: Set up Java version
+#         uses: actions/setup-java@v1
+#         with:
+#           java-version: '8'
+
+#       - name: Build with Maven
+#         run: mvn clean install
+
+#       - name: Upload artifact for deployment job
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: java-app
+#           path: '${{ github.workspace }}/target/*.war'
+
+#   deploy:
+#     runs-on: windows-latest
+#     needs: build
+#     environment:
+#       name: 'Production'
+#       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+#     steps:
+#       - name: Download artifact from build job
+#         uses: actions/download-artifact@v2
+#         with:
+#           name: java-app
+
+#       - name: Deploy to Azure Web App
+#         id: deploy-to-webapp
+#         uses: azure/webapps-deploy@v2
+#         with:
+#           app-name: 'demomavenwebapp'
+#           slot-name: 'Production'
+#           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0916BD4294EC4C5B9AF52C3C1D0BDE6A }}
+#           package: '*.war'
