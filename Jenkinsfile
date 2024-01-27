@@ -29,23 +29,12 @@ pipeline {
                 sh 'docker build -t anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
-
-       stage('Docker Login') {
-    steps {
-        script {
-            def dockerLogin = sh(script: "docker login -u siva660 -p Red123@&&", returnStatus: true)
-            if (dockerLogin != 0) {
-                error "Failed to login to Docker Hub"
-            }
-        }
-    }
-}
-
-
-        stage('Docker Push'){
+       stage('Docker Login'){  
             steps {
-                sh 'docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
-            }
+                 withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
+                    sh "docker login -u siva660 -p ${Dockerpwd}"
+                }
+            }                
         }
         
         stage('Docker deploy'){
