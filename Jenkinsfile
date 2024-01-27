@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('Compile and Clean') { 
             steps {
-
                 sh "mvn clean compile"
             }
         }
@@ -12,7 +11,7 @@ pipeline {
                 sh "mvn test site"
             }
             
-             post {
+            post {
                 always {
                     junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'   
                 }
@@ -25,7 +24,6 @@ pipeline {
             }
         }
 
-
         stage('Build Docker image'){
             steps {
                 sh 'docker build -t anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER} .'
@@ -33,33 +31,27 @@ pipeline {
         }
 
         stage('Docker Login'){
-            
             steps {
-                withCredentials([string(credentialsId: 'siva660', variable: 'Dockerpwd')]) {
-                }
-                    sh "echo ${Dockerpwd} | docker login -u siva660 --password-stdin"
-                }
-        }               
-        
+                sh 'docker login -u siva660 -p Red123@&&'
+            }                
+        }
 
         stage('Docker Push'){
             steps {
-                 sh "docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}"
+                sh 'docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
-            }
-        
+        }
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8081:8080 siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
+                sh 'docker run -itd -p 8081:8080 siva660/springboot:0.0.3'
             }
         }
 
-        
-        stage('Archving') { 
+        stage('Archiving') { 
             steps {
                  archiveArtifacts '**/target/*.jar'
             }
         }
-    
+    }
 }
