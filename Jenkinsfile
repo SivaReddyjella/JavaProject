@@ -36,20 +36,20 @@ pipeline {
             
             steps {
                  withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                    sh "docker login -u anvbhaskar -p ${Dockerpwd}"
+                    sh "docker login -u siva660 -p ${Dockerpwd}"
                 }
             }                
         }
 
         stage('Docker Push'){
             steps {
-                sh 'docker push anvbhaskar/docker_jenkins_pipeline:${BUILD_NUMBER}'
+                sh 'docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8081:8080 anvbhaskar/springboot:0.0.3'
+                sh 'docker run -itd -p 8081:8080 siva660/springboot:0.0.3'
             }
         }
 
