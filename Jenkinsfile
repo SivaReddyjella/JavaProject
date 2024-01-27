@@ -38,10 +38,11 @@ pipeline {
         }
         
         stage('Docker deploy'){
-            steps {
-                sh 'docker run -itd -p 8081:8080 siva660/springboot:0.0.3'
-            }
-        }
+    steps {
+        sh 'docker run -itd -p 8081:8080 siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
+    }
+}
+
 
         stage('Archiving') { 
             steps {
