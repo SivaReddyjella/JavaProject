@@ -30,11 +30,17 @@ pipeline {
             }
         }
 
-        stage('Docker Login'){
-            steps {
-                sh 'docker login -u siva660 -p Red123@&&'
-            }                
+       stage('Docker Login') {
+    steps {
+        script {
+            def dockerLogin = sh(script: "docker login -u siva660 -p Red123@&&", returnStatus: true)
+            if (dockerLogin != 0) {
+                error "Failed to login to Docker Hub"
+            }
         }
+    }
+}
+
 
         stage('Docker Push'){
             steps {
