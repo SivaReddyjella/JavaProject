@@ -43,12 +43,6 @@ pipeline {
 '
     }
 }
-      stage('Docker Push'){
-            steps {
-               sh "docker login -u siva660 -p Red123@&&"
-
-            }
-        }
 
         stage('Archiving') { 
             steps {
