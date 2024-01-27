@@ -37,20 +37,21 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'siva660', variable: 'Dockerpwd')]) {
                 }
-                    sh "docker login -u siva660 -p ${Dockerpwd}"
+                    sh "echo ${Dockerpwd} | docker login -u siva660 --password-stdin"
                 }
-            }                
-        }
+        }               
+        
 
         stage('Docker Push'){
             steps {
-                sh 'docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
+                 sh "docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}"
             }
-        }
+            }
+        
         
         stage('Docker deploy'){
             steps {
-                sh 'docker run -itd -p 8081:8080 siva660/springboot:0.0.3'
+                sh 'docker run -itd -p 8081:8080 siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
 
@@ -60,5 +61,5 @@ pipeline {
                  archiveArtifacts '**/target/*.jar'
             }
         }
-    }
+    
 }
