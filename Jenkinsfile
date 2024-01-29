@@ -39,7 +39,7 @@ pipeline {
         
         stage('Docker deploy'){
     steps {
-        docker run -itd -p 8081:8080 siva660/docker_jenkins_pipeline:${BUILD_NUMBER}
+        docker run -it -d -p 8081:8080 siva660/docker_jenkins_pipeline:${BUILD_NUMBER}
 '
     }
 }
