@@ -26,7 +26,7 @@ pipeline {
 
         stage('Build Docker image'){
             steps {
-                sh 'docker build -t siva/docker_jenkins_pipeline:${BUILD_NUMBER} .'
+                sh 'docker build -t siva660/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
        stage('Docker Login'){  
