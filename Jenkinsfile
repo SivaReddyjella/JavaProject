@@ -26,7 +26,8 @@ pipeline {
 
         stage('Build Docker image'){
             steps {
-                sh 'docker build -t siva660/docker_jenkins_pipeline:${BUILD_NUMBER} .'
+               sh "docker build -t siva660/docker_jenkins_pipeline:${BUILD_NUMBER} ."
+
             }
         }
        stage('Docker Login'){  
@@ -37,7 +38,7 @@ pipeline {
             }                
         }
         
-     stage('Docker deploy') {
+    stage('Docker deploy') {
     steps {
         script {
             // Run the Docker container with the specified image and tag
