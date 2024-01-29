@@ -26,20 +26,7 @@ pipeline {
             }
             }
         }
-     
-        
-         stage('Execute Maven') {
-           steps {
-             
-                sh 'mvn -X package'     
-          }
-        }
-        
-        
          
-        
-        
-        
         stage('Ansible Deploy') {
              
             steps {
