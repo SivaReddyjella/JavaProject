@@ -37,12 +37,16 @@ pipeline {
             }                
         }
         
-        stage('Docker deploy'){
+        stage('Docker deploy') {
     steps {
-        docker run -it -d -p 8081:8080 siva660/docker_jenkins_pipeline:${BUILD_NUMBER}
-'
+        script {
+            // Run the Docker container with the specified image and tag
+            def dockerImageTag = "${BUILD_NUMBER}"
+            sh "docker run -it -d -p 8081:8080 siva660/docker_jenkins_pipeline:${dockerImageTag}"
+        }
     }
 }
+
 
         stage('Archiving') { 
             steps {
