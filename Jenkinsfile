@@ -35,7 +35,7 @@ pipeline {
             // Run the Docker container with the specified image and tag
             def dockerImageTag = "${BUILD_NUMBER}"
             sh "docker run -d -p 8082:8080 siva660/docker_jenkins_pipeline:${dockerImageTag}"
-            sh "docker run -d -p 8082:8080 --name my_container siva660/docker_jenkins_pipeline:${dockerImageTag}"
+          
         }
     }
 }
