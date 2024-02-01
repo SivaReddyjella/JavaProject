@@ -23,18 +23,18 @@ pipeline {
             }
         }
         stage('Build Docker image'){
+            
             steps {
                 sh 'docker build -t siva660/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
        stage('Docker Login'){  
-            steps {
-                 withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-                    sh "docker login -u siva660 -p ${Dockerpwd}"
-                }
-            }                
-        }
-        
+           steps{
+            withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
+             sh "docker login -u siva660 -p ${Dockerpwd}"
+            }
+           }
+       }
      stage('Docker deploy') {
     steps {
         script {
@@ -45,5 +45,11 @@ pipeline {
         }
     }
 }
+        stage('Archving') { 
+            steps {
+                 archiveArtifacts '**/target/*.jar'
+            }
+        }
     }
 }
+
