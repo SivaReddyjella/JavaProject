@@ -28,13 +28,14 @@ pipeline {
                 sh 'docker build -t siva660/docker_jenkins_pipeline:${BUILD_NUMBER} .'
             }
         }
-        stage('Docker Login'){  
-           steps{
-            withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
-             sh "docker login -u siva660 -p ${Dockerpwd}"
+        stages {
+        stage('Docker Login') {
+            steps {
+                withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
+                    sh "docker login -u siva660 -p ${Dockerpwd}"
+                }
             }
-           }
-       }      
+        } 
   stage('Docker deploy') {
     steps {
         script {
