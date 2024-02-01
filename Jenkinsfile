@@ -29,13 +29,11 @@ pipeline {
         }        
         stage('Docker Login') {
             steps {
-               script {
                 withCredentials([string(credentialsId: 'DockerId', variable: 'Dockerpwd')]) {
                     sh "docker login -u siva660 -p ${Dockerpwd}"
                 }
             }
-        } 
-        }
+        }         
   stage('Docker deploy') {
     steps {
         script {
