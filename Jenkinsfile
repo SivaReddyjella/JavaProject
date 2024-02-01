@@ -29,22 +29,28 @@ pipeline {
             }
         }
       
-    stage('Docker deploy') {
+  stage('Docker deploy') {
     steps {
         script {
-            // Run the Docker container with the specified image and tag
             def dockerImageTag = "${BUILD_NUMBER}"
-            sh "docker run -d -p 8082:8080 siva660/docker_jenkins_pipeline:${dockerImageTag}"
-          
+            def containerId = sh(script: "docker run -d -p 8082:8080 siva660/docker_jenkins_pipeline:${dockerImageTag}", returnStdout: true).trim()
+
+            if (containerId) {
+                echo "Docker container started successfully. Container ID: ${containerId}"
+            } else {
+                error "Failed to start Docker container."
+            }
         }
     }
 }
+
 
         stage('Archving') { 
             steps {
                  archiveArtifacts '**/target/*.jar'
             }
         }
+        
     }
 }
 
