@@ -33,7 +33,12 @@ pipeline {
                     sh "docker login -u siva660 -p ${Dockerpwd}"
                 }
             }
-        }         
+        }  
+        stage('Docker Push'){
+            steps {
+                sh 'docker push siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
+            }
+        }
   stage('Docker deploy') {
     steps {
         script {
