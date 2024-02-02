@@ -36,7 +36,7 @@ pipeline {
         }  
         stage('Docker Push'){
             steps {
-                sh 'docker push siva660/docker_jenkins_pipeline:1'
+                sh 'docker push docker.io/siva660/docker_jenkins_pipeline:${BUILD_NUMBER}'
             }
         }
   stage('Docker deploy') {
